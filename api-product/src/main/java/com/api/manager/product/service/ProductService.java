@@ -38,9 +38,7 @@ public class ProductService {
 
         Product product=productDao.findById(id).get();
 
-        System.out.println(product.getName());
         product.setName(request.getName());
-        System.out.println(product.getName());
         product.setPrice(request.getPrice());
         product.setAvaiable(request.getAvaiable());
         product.setStock(request.getStock());

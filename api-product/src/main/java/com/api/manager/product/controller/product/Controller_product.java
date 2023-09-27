@@ -5,8 +5,11 @@ package com.api.manager.product.controller.product;
 import com.api.manager.product.model.Product;
 import com.api.manager.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,31 +28,37 @@ public class Controller_product {
     };
 
     @PostMapping("/insertproduct")
-    public Product saveProduct(@RequestBody Product product){ //esto pasa en el body de la consulta
+    public ResponseEntity<Product> saveProduct(@RequestBody Product product){ //esto pasa en el body de la consulta
 
-        return this.productService.insertProduct(product);
+        Product newProduct=this.productService.insertProduct(product);
+        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     };
 
     @GetMapping("/getProductById/{id}")
-    public Optional<Product> getProductById(@PathVariable("id") Long id){ //esto pasa en el path de la consulta
-        return this.productService.getProductById(id);
+    public ResponseEntity<Optional> getProductById(@PathVariable("id") Long id){ //esto pasa en el path de la consulta
+
+       Optional<Product> product= this.productService.getProductById(id);
+
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @PutMapping("/editproduct/{id}")
-    public Product updateProductById( @PathVariable("id") Long id,@RequestBody Product request){
-        return this.productService.updateProductById(request, id);
+    public ResponseEntity<Product>  updateProductById( @PathVariable("id") Long id,@RequestBody Product request){
+
+        Product product=this.productService.updateProductById(request, id);
+
+        return  new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/deleteproductbyid/{id}")
-    public String deleteProductById(@PathVariable("id") Long id){
+    public ResponseEntity<HashMap<String, Boolean>> deleteProductById(@PathVariable("id") Long id){
 
-        boolean ok=this.productService.deleteProduct(id);
+        this.productService.deleteProduct(id);
+        HashMap<String, Boolean> stateProductDelete=new HashMap<>();
 
-        if(ok){
-            return "User with id" + id + "deleted";
-        } else {
-            return "Error, we have a problem and can´t delete user id: "+ id;
-        }
+        stateProductDelete.put("deleted", true);
+
+        return ResponseEntity.ok(stateProductDelete);
     }
 
 }
