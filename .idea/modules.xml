@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/api-product.iml" filepath="$PROJECT_DIR$/.idea/api-product.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/api-crud.iml" filepath="$PROJECT_DIR$/.idea/api-crud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api-product/api-product.iml" filepath="$PROJECT_DIR$/api-product/api-product.iml" />
     </modules>
   </component>
 </project>
